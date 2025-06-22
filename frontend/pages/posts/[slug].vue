@@ -52,7 +52,7 @@ useSiteMetadata({
             />
           </div>
           <div class="prose prose-a:text-red-500 max-w-2xl" v-if="post.content">
-            <PortableText :portableText="post.content" />
+            <PortableContent :content="post.content" />
           </div>
         </article>
       </div>

@@ -17,7 +17,7 @@ usePageAnimation();
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative p-16">
     <div
       class="bg-gradient-to-r from-red-400 w-[0] h-full absolute left-0 left-div"
     ></div>
