@@ -20,7 +20,7 @@ const directors = computed(() => props.item.credits?.crew.filter(person => perso
       width="400"
       height="600"
       format="webp"
-      :src="`/tmdb${props.item.poster_path}`"
+      :src="`/${props.item.poster_path}`"
       :alt="props.item.title || props.item.name"
       block border="4 gray4/10" w-79 lt-md:hidden
       transition duration-400 object-cover aspect="10/16"

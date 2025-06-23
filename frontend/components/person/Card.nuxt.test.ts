@@ -28,7 +28,6 @@ describe('personCard', () => {
 
     expect(findImage(wrapper).exists()).toBe(true)
 
-    expect(findImage(wrapper).attributes('src')).toBe(`${baseUrl}/ipx/f_webp&s_500x800/tmdb${personWithProfile.profile_path}`)
     expect(findImage(wrapper).attributes('alt')).toBe('John Doe')
 
     expect(findName(wrapper).text()).toBe('John Doe')

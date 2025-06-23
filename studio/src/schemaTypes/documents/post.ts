@@ -46,8 +46,22 @@ export const post = defineType({
     defineField({
       name: 'content',
       title: 'Content',
-      type: 'blockContent',
+      type: 'array',
       group: 'content',
+      of: [
+        { type: 'block' },
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alt text',
+            }
+          ]
+        }
+      ]
     }),
     defineField({
       name: 'excerpt',
