@@ -2,6 +2,7 @@
 const scrollEl = ref<HTMLDivElement>()
 
 function scrollLeft() {
+  console.log('scrollLeft')
   scrollEl.value?.scrollBy({
     left: -window.innerWidth,
     behavior: 'smooth',
@@ -9,11 +10,13 @@ function scrollLeft() {
 }
 
 function scrollRight() {
+  console.log('scrollRight')
   scrollEl.value?.scrollBy({
     left: window.innerWidth,
     behavior: 'smooth',
   })
 }
+
 </script>
 
 <template>
@@ -32,7 +35,7 @@ function scrollRight() {
     </div>
     <button
       type="button"
-      flex="~ col" absolute top-0 left-0 bottom-0 bg-black:50 p3 items-center justify-center op0 hover:op100 transition
+      flex="~ col" absolute top-0 left-0 bottom-0 p3 items-center justify-center op0 hover:op100 transition
       title="Scroll left"
       @click="scrollLeft()"
     >
@@ -40,7 +43,7 @@ function scrollRight() {
     </button>
     <button
       type="button"
-      flex="~ col" absolute top-0 right-0 bottom-0 bg-black:50 p3 items-center justify-center op0 hover:op100 transition
+      flex="~ col" absolute top-0 right-0 bottom-0  p3 items-center justify-center op0 hover:op100 transition
       title="Scroll right"
       @click="scrollRight()"
     >

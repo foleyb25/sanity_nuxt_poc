@@ -8,6 +8,14 @@ const props = defineProps<{
 
 <template>
   <CarouselBase>
+    <template #title>
+      {{ $t("Popular Movies") }}
+    </template>
+    <template #more>
+      <NuxtLink :to="`/category/`" n-link>
+        {{ $t('Explore more') }}
+      </NuxtLink>
+    </template>
     <MediaCard
       v-for="post of query || []"
       :key="post._id"

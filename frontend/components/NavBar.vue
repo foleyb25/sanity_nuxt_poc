@@ -1,13 +1,10 @@
 <template>
   <div
     flex="~ row lg:col"
-    items-center
-    justify-evenly
-    py5 px5
+    justify-evenly items-center
+    py5 lg:px5
     border="t lg:r base"
     bg-black
-    text-white
-    class="h-[calc(100vh-6rem)] border-color-[#111]"
   >
     <NuxtLink v-slot="{ isActive }" to="/" :title="$t('Home')">
       <div

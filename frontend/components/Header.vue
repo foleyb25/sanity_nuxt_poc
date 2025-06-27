@@ -10,8 +10,8 @@ const { data: settings } =
   <header
     class="fixed z-[1] h-24 inset-0 bg-black flex items-center border-b border-b-white"
   >
-    <div class="w-full mr-12">
-      <div class="flex items-center justify-end gap-5">
+    <div class="w-full lg:mr-12">
+      <div class="flex items-center justify-center lg:justify-end gap-5">
 
         <nav>
           <ul
