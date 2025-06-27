@@ -12,6 +12,7 @@ const { data: posts } = await useSanityQuery<PostsQueryResult>(postsQuery);
 
 <template>
   <div>
+    <MediaHeroBeGreat />
     <CarouselAutoQuery
       :query="posts"
     />

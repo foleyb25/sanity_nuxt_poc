@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const isDev = process.env.NODE_ENV === 'development'
+import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
@@ -78,5 +79,6 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ["shallowequal", "lodash/startCase.js"],
     },
+    plugins: [svgLoader()],
   },
 });
