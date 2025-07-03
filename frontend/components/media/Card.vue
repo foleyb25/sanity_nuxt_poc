@@ -16,6 +16,7 @@ defineProps<{
       transition duration-400
       hover="scale-105 z10"
     >
+    <div class="bg-red">{{ post.coverImage }}</div>
     <SanityImage
               v-if="post.coverImage?.asset?._ref"
               class="rounded-2xl shadow-md transition-shadow object-cover"

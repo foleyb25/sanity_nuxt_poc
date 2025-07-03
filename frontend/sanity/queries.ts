@@ -14,14 +14,46 @@ link {
 	}
 `;
 
-export const postsQuery =
-  defineQuery(`*[_type == "post"] | order(date desc, _updatedAt desc) {
-		...
-	}`);
+export const postsQuery = defineQuery(/* groq */ `
+  *[_type == "post"] | order(date desc, _updatedAt desc) {
+    _id,
+    title,
+    slug,
+    date,
+    body,
+    author->{
+      nickName,
+      picture {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
+    }
+  }
+`);
+
 export const somePostsQuery = defineQuery(/* groq */ `
-		*[_type == "post" && slug.current != $skip][0...$limit] | order(date desc, _updatedAt desc) {
-			...
-		}`);
+  *[_type == "post" && slug.current != $skip][0...$limit] | order(date desc, _updatedAt desc) {
+    _id,
+    title,
+    slug,
+    date,
+    body,
+    author->{
+      nickName,
+      picture {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      }
+    }
+  }
+`);
+
 export const postQuery = defineQuery(/* groq */ `
 		*[_type == "post" && defined(slug.current) && slug.current == $slug][0]{
 			...,

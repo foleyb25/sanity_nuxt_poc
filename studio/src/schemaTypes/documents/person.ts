@@ -25,6 +25,17 @@ export const person = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+        name: 'nickName',
+        title: 'NickName',
+        type: 'string',
+        validation: (rule) => rule.required(),
+      }),
+      defineField({
+        name: 'bio',
+        title: 'Bio',
+        type: 'text',
+      }),
+    defineField({
       name: 'picture',
       title: 'Picture',
       type: 'image',
@@ -54,17 +65,19 @@ export const person = defineType({
       validation: (rule) => rule.required(),
     }),
   ],
+  
   // List preview configuration. https://www.sanity.io/docs/previews-list-views
   preview: {
     select: {
       firstName: 'firstName',
       lastName: 'lastName',
       picture: 'picture',
+      bio: 'bio'
     },
     prepare(selection) {
       return {
         title: `${selection.firstName} ${selection.lastName}`,
-        subtitle: 'Person',
+        subtitle: 'person',
         media: selection.picture,
       }
     },
