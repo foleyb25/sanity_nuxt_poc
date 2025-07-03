@@ -480,13 +480,30 @@ export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/queries.ts
 // Variable: postsQuery
-// Query: *[_type == "post"] | order(date desc, _updatedAt desc) {    _id,    title,    slug,    date,    body,    author->{      nickName,      picture {        asset->{          _id,          url        },        alt      }    }  }
+// Query: *[_type == "post"] | order(date desc, _updatedAt desc) {		...,		author->{			nickName,			picture {			  asset->{				_id,				url			  },			  alt			}		  }	}
 export type PostsQueryResult = Array<{
   _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
   title: string;
   slug: Slug;
-  date: string | null;
-  body: null;
+  content?: BlockContent;
+  excerpt?: string;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  date?: string;
   author: {
     nickName: null;
     picture: {
@@ -497,25 +514,42 @@ export type PostsQueryResult = Array<{
       alt: string | null;
     };
   } | null;
+  seoTitle?: string;
+  seoDescription?: string;
 }>;
 // Variable: somePostsQuery
-// Query: *[_type == "post" && slug.current != $skip][0...$limit] | order(date desc, _updatedAt desc) {    _id,    title,    slug,    date,    body,    author->{      nickName,      picture {        asset->{          _id,          url        },        alt      }    }  }
+// Query: *[_type == "post" && slug.current != $skip][0...$limit] | order(date desc, _updatedAt desc) {	...}
 export type SomePostsQueryResult = Array<{
   _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
   title: string;
   slug: Slug;
-  date: string | null;
-  body: null;
-  author: {
-    nickName: null;
-    picture: {
-      asset: {
-        _id: string;
-        url: string | null;
-      } | null;
-      alt: string | null;
+  content?: BlockContent;
+  excerpt?: string;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
-  } | null;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  date?: string;
+  author?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "person";
+  };
+  seoTitle?: string;
+  seoDescription?: string;
 }>;
 // Variable: postQuery
 // Query: *[_type == "post" && defined(slug.current) && slug.current == $slug][0]{			...,			content[]{						...,						markDefs[]{							...,							_type == "link" => {								"link": {									...,									_type == "link" => {	"page": page->slug.current,	"post": post->slug.current}								}							},						}					},			"author": author->{..., "picture": picture.asset._ref}		}
@@ -723,8 +757,8 @@ export type SettingsQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"post\"] | order(date desc, _updatedAt desc) {\n    _id,\n    title,\n    slug,\n    date,\n    body,\n    author->{\n      nickName,\n      picture {\n        asset->{\n          _id,\n          url\n        },\n        alt\n      }\n    }\n  }\n": PostsQueryResult;
-    "\n  *[_type == \"post\" && slug.current != $skip][0...$limit] | order(date desc, _updatedAt desc) {\n    _id,\n    title,\n    slug,\n    date,\n    body,\n    author->{\n      nickName,\n      picture {\n        asset->{\n          _id,\n          url\n        },\n        alt\n      }\n    }\n  }\n": SomePostsQueryResult;
+    "*[_type == \"post\"] | order(date desc, _updatedAt desc) {\n\t\t...,\n\t\tauthor->{\n\t\t\tnickName,\n\t\t\tpicture {\n\t\t\t  asset->{\n\t\t\t\t_id,\n\t\t\t\turl\n\t\t\t  },\n\t\t\t  alt\n\t\t\t}\n\t\t  }\n\t}": PostsQueryResult;
+    "\n*[_type == \"post\" && slug.current != $skip][0...$limit] | order(date desc, _updatedAt desc) {\n\t...\n}": SomePostsQueryResult;
     "\n\t\t*[_type == \"post\" && defined(slug.current) && slug.current == $slug][0]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmarkDefs[]{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t_type == \"link\" => {\n\t\t\t\t\t\t\t\t\"link\": {\n\t\t\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t\t\t\n_type == \"link\" => {\n\t\"page\": page->slug.current,\n\t\"post\": post->slug.current\n}\n\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\"author\": author->{..., \"picture\": picture.asset._ref}\n\t\t}": PostQueryResult;
     "\n\t\t*[_type == \"page\" && defined(slug.current) && slug.current == $slug][0]{\n\t\t\t...,\n\t\t\t\"pageBuilder\": pageBuilder[]{\n\t\t\t\t...,\n\t\t\t\t_type == \"callToAction\" => {\n\t\t\t\t\t\nlink {\n\t...,\n\t\n_type == \"link\" => {\n\t\"page\": page->slug.current,\n\t\"post\": post->slug.current\n}\n\n\t}\n,\n\t\t\t\t},\n\t\t\t\t_type == \"infoSection\" => {\n\t\t\t\t\tcontent[]{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmarkDefs[]{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t_type == \"link\" => {\n\t\t\t\t\t\t\t\t\"link\": {\n\t\t\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t\t\t\n_type == \"link\" => {\n\t\"page\": page->slug.current,\n\t\"post\": post->slug.current\n}\n\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t}\n\t\t}": PageQueryResult;
     "\n\t\t*[_type == \"settings\"][0]{\n\t\t\ttitle,\n\t\t\tdescription[]{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmarkDefs[]{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t_type == \"link\" => {\n\t\t\t\t\t\t\t\t\"link\": {\n\t\t\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t\t\t\n_type == \"link\" => {\n\t\"page\": page->slug.current,\n\t\"post\": post->slug.current\n}\n\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\"ogImage\": ogImage.asset->url\n\t\t}": SettingsQueryResult;
