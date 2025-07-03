@@ -30,7 +30,7 @@ const credits = [...props.items]
         {{ i.title || i.name }}
       </div>
       <div op50 data-testid="credit-character">
-        {{ i.character ? $t('as {character}', { character: i.character }) : '' }}
+        {{ i.character ? ('as {character}', { character: i.character }) : '' }}
       </div>
     </NuxtLink>
   </div>

@@ -21,7 +21,7 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
-  modules: ["@nuxtjs/sanity", "@nuxt/fonts", '@vueuse/nuxt', '@unocss/nuxt', '@nuxt/image', '@nuxtjs/i18n', '@nuxt/test-utils/module'],
+  modules: ["@nuxtjs/sanity", "@nuxt/fonts", '@vueuse/nuxt', '@unocss/nuxt', '@nuxt/image', '@nuxt/test-utils/module'],
   sanity: {
     projectId: process.env.NUXT_SANITY_PROJECT_ID,
     dataset: process.env.NUXT_SANITY_DATASET,

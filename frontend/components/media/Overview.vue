@@ -11,7 +11,7 @@ defineProps<{
   <MediaInfo :item="item" :type="type" />
   <CarouselBase v-if="item.credits?.cast?.length">
     <template #title>
-      {{ $t('Cast') }}
+      {{ ('Cast') }}
     </template>
     <PersonCard
       v-for="i of item.credits?.cast"

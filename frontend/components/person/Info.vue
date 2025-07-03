@@ -30,7 +30,7 @@ const externalIds = computed(() => ({ ...props.item.external_ids, homepage: prop
 
         <div v-if="props.item.biography" font-sans ws-pre-wrap op80 leading-relaxed data-testid="biography" v-text="props.item.biography" />
         <div v-else op50 italic data-testid="no-biography">
-          {{ $t('(no biography)') }}
+          {{ ('(no biography)') }}
         </div>
       </div>
 
@@ -38,7 +38,7 @@ const externalIds = computed(() => ({ ...props.item.external_ids, homepage: prop
         <ul grid="~ cols-[max-content_1fr] gap3" items-center>
           <template v-if="props.item.known_for_department">
             <div op60 data-testid="known-for-label">
-              {{ $t('Known for') }}
+              {{ ('Known for') }}
             </div>
             <div data-testid="known-for">
               {{ props.item.known_for_department }}
@@ -46,7 +46,7 @@ const externalIds = computed(() => ({ ...props.item.external_ids, homepage: prop
           </template>
           <template v-if="props.item.place_of_birth">
             <div op60 data-testid="place-of-birth-label">
-              {{ $t('Place of birth') }}
+              {{ ('Place of birth') }}
             </div>
             <div data-testid="place-of-birth">
               {{ props.item.place_of_birth }}
@@ -55,7 +55,7 @@ const externalIds = computed(() => ({ ...props.item.external_ids, homepage: prop
 
           <template v-if="props.item.birthday">
             <div op60 data-testid="birthday-label">
-              {{ $t('Birthday') }}
+              {{ ('Birthday') }}
             </div>
             <div data-testid="birthday">
               {{ formatDate(props.item.birthday) }}

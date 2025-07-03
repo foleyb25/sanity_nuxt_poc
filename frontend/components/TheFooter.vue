@@ -32,8 +32,6 @@
           <IconVercel alt="Vercel" />
         </a>
       </ExternalLinks>
-
-      <LanguageSwitcher />
     </div>
   </footer>
 </template>

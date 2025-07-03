@@ -9,11 +9,11 @@ const props = defineProps<{
 <template>
   <CarouselBase>
     <template #title>
-      {{ $t("Popular Movies") }}
+      {{ ("Popular Movies") }}
     </template>
     <template #more>
       <NuxtLink :to="`/category/`" n-link>
-        {{ $t('Explore more') }}
+        {{ ('Explore more') }}
       </NuxtLink>
     </template>
     <MediaCard

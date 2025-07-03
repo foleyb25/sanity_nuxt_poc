@@ -12,13 +12,13 @@ const tab = ref<'overview' | 'videos' | 'photos'>('overview')
 <template>
   <div flex items-center justify-center gap8 py6>
     <button n-tab :class="{ 'n-tab-active': tab === 'overview' }" @click="tab = 'overview'">
-      {{ $t('Overview') }}
+      {{ ('Overview') }}
     </button>
     <button n-tab :class="{ 'n-tab-active': tab === 'videos' }" @click="tab = 'videos'">
-      {{ $t('Videos') }}
+      {{ ('Videos') }}
     </button>
     <button n-tab :class="{ 'n-tab-active': tab === 'photos' }" @click="tab = 'photos'">
-      {{ $t('Media Photos') }}
+      {{ ('Media Photos') }}
     </button>
   </div>
   <MediaOverview v-if="tab === 'overview'" :item="item" :type="type" />

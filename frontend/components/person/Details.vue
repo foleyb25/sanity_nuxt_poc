@@ -12,13 +12,13 @@ const tab = ref<'known' | 'credits' | 'photos'>('known')
   <PersonInfo :item="item" />
   <div flex items-center justify-center gap8 py6>
     <button n-tab :class="{ 'n-tab-active': tab === 'known' }" data-testid="tab-known" @click="tab = 'known'">
-      {{ $t('Known For') }}
+      {{ ('Known For') }}
     </button>
     <button n-tab :class="{ 'n-tab-active': tab === 'credits' }" data-testid="tab-credits" @click="tab = 'credits'">
-      {{ $t('Credits') }}
+      {{ ('Credits') }}
     </button>
     <button n-tab :class="{ 'n-tab-active': tab === 'photos' }" data-testid="tab-photos" @click="tab = 'photos'">
-      {{ $t('Person Photos') }}
+      {{ ('Person Photos') }}
     </button>
   </div>
   <MediaGrid v-if="tab === 'known'" data-testid="media-grid">

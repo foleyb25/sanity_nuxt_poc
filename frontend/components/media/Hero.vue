@@ -54,7 +54,7 @@ const mounted = useMounted()
             </div>
             <span class="op50 hidden md:block">·</span>
             <div class="op50 hidden md:block">
-              {{ $t('{numberOfReviews} Reviews', { numberOfReviews: formatVote(props.item.vote_count) }) }}
+              {{ ('{numberOfReviews} Reviews', { numberOfReviews: formatVote(props.item.vote_count) }) }}
             </div>
             <span v-if="props.item.release_date" op50>·</span>
             <div v-if="props.item.release_date" op50>
@@ -73,11 +73,11 @@ const mounted = useMounted()
               type="button"
               flex="~ gap2" items-center p="x6 y3"
               bg="gray/15 hover:gray/20" transition
-              :title="$t('Watch Trailer')"
+              :title="('Watch Trailer')"
               @click="playTrailer()"
             >
               <div i-ph-play />
-              {{ $t('Watch Trailer') }}
+              {{ ('Watch Trailer') }}
             </button>
           </div>
         </div>
@@ -87,7 +87,7 @@ const mounted = useMounted()
       <button
         type="button"
         items-center p10 text-5xl op20 hover:op80 transition
-        :title="$t('Watch Trailer')"
+        :title="('Watch Trailer')"
         @click="playTrailer()"
       >
         <div i-ph-play-circle-light />
