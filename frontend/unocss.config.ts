@@ -20,6 +20,9 @@ export default defineConfig({
     ['n-tab', 'text-xl tracking-wide uppercase p3 border-b-2 border-transparent op20 transition'],
     ['n-tab-active', 'border-current op100'],
     ['border-base', 'border-gray-400/20'],
+    ['~', 'flex'],
+    ['col', 'flex-col'],
+    ['row', 'flex-row'],
   ],
   rules: [
     [/^view-transition-([\w-]+)$/, ([, name]) => ({ 'view-transition-name': name })],

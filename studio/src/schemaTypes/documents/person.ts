@@ -35,6 +35,11 @@ export const person = defineType({
         title: 'Bio',
         type: 'text',
       }),
+      defineField({
+        name: 'quote',
+        title: 'Quote',
+        type: 'text',
+      }),
     defineField({
       name: 'picture',
       title: 'Picture',
@@ -63,6 +68,21 @@ export const person = defineType({
         },
       },
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'instagram',
+      title: 'Instagram Handle',
+      type: 'string',
+    }),
+    defineField({
+      name: 'snapchat',
+      title: 'Snapchat Handle',
+      type: 'string',
+    }),
+    defineField({
+      name: 'github',
+      title: 'Github Handle',
+      type: 'string',
     }),
   ],
   

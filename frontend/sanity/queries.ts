@@ -18,14 +18,7 @@ export const postsQuery =
   defineQuery(`*[_type == "post"] | order(date desc, _updatedAt desc) {
 		...,
 		author->{
-			nickName,
-			picture {
-			  asset->{
-				_id,
-				url
-			  },
-			  alt
-			}
+			...
 		  }
 	}`);
 

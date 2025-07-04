@@ -1,18 +1,38 @@
 <script setup lang="ts">
-import type { Media } from '~/types'
 
 defineProps<{
-  item: Media
+  item: any
 }>()
 </script>
 
 <template>
   <div flex="~ col" px4 md:px14 py4 gap6>
-    <div op50>
-      {{ ('{numberOfVideos} Videos', { numberOfVideos: item.videos?.results?.length || 0 }) }}
+    <div flex="~ col items-center" px4 md:px14 py4 gap6>
+      <div v-if="item.picture" class=" h-50 w-50">
+      <SanityImage
+        :asset-id="item.picture"
+        auto="format"
+        class="h-full rounded-full object-cover"
+        :alt="`${item.firstName} ${item.lastName}`"
+      />
+      </div>
+      <h2 id="Name" class="text-2xl">{{ item.firstName }} {{ item.nickName ? "'"+item.nickName+"'" : null }} {{ item.lastName }}</h2>
+      <div id="SocialLinks" gap3 class="flex flex-row">
+        <a v-if="item.instagram" :href="'https://instagram.com/'+item.instagram" target="_blank"><div class="i-ph-instagram-logo"></div></a>
+        <a v-if="item.snapchat" :href="'https://snapchat.com/@'+item.snapchat" target="_blank"><div class="i-ph-snapchat-logo"></div></a>
+        <a v-if="item.github" :href="'https://github.com/'+item.github" target="_blank"><div class="i-ph-github-logo"></div></a>
+        
+        
+      </div>
     </div>
-    <div grid="~ cols-minmax-20rem" gap4>
-      <VideoCard v-for="i of item.videos?.results" :key="i.id" :item="i" />
+   
+    <hr>
+    <div id="Bio">{{ item.bio }}</div>
+    <hr>
+    <div v-if="item.quote" class="flex flex-col items-center">
+      <q id="Quote" class="italic"> {{ item.quote }} </q>
     </div>
+    
+    
   </div>
 </template>

@@ -115,7 +115,10 @@ const route = useRoute()
       />
     </CarouselBase> -->
     <MediaHero :item="post" />
-    <MediaDetails :item="post" />
+    <div class="p-8">
+      <MediaDetails :item="post" />
+    </div>
+    
     <TheFooter />
   </div>
 </template>
