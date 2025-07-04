@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import { postQuery, somePostsQuery } from "~/sanity/queries";
 import type { PostQueryResult, SomePostsQueryResult } from "~/sanity/types";
 
@@ -41,7 +41,7 @@ useSiteMetadata({
         </div>
         <article class="gap-6 grid max-w-4xl">
           <div>
-            <!-- <CoverImage :image="post.coverImage" priority /> -->
+             <CoverImage :image="post.coverImage" priority />
             <SanityImage
               v-if="post.coverImage?.asset?._ref"
               class="rounded-2xl shadow-md transition-shadow object-cover"
@@ -64,5 +64,58 @@ useSiteMetadata({
         </aside>
       </div>
     </div>
+  </div>
+</template> -->
+
+<script setup lang="ts">
+import { postQuery, somePostsQuery } from "~/sanity/queries";
+import type { PostQueryResult, SomePostsQueryResult } from "~/sanity/types";
+
+const { data: post } = await useSanityQuery<PostQueryResult>(postQuery, {
+  slug: useRoute().params.slug,
+});
+const { data: posts } = await useSanityQuery<SomePostsQueryResult>(
+  somePostsQuery,
+  {
+    skip: useRoute().params.slug,
+    limit: 2,
+  }
+);
+
+useSiteMetadata({
+  title: post?.value?.seoTitle || post?.value?.title,
+  description: post?.value?.seoDescription || post?.value?.excerpt,
+});
+
+const route = useRoute()
+
+// useHead({
+//   title: item.name || item.title,
+//   meta: [
+//     { name: 'description', content: item.overview },
+//     { property: 'og:image', content: $img(`/tmdb${item.poster_path}`, { width: 1200, height: 630 }) },
+//   ],
+// })
+</script>
+
+<template>
+  <div v-if="post">
+    <!-- <MediaHero :item="item" />
+    <MediaDetails :item="item" :type="type" />
+    <CarouselBase v-if="recommendations?.results?.length">
+      <template #title>
+        {{ $t('More like this') }}
+      </template>
+      <MediaCard
+        v-for="i of recommendations.results"
+        :key="i.id"
+        :item="i"
+        :type="type"
+        flex-1 w-40 md:w-60
+      />
+    </CarouselBase> -->
+    <MediaHero :item="post" />
+    <MediaDetails :item="post" />
+    <TheFooter />
   </div>
 </template>
