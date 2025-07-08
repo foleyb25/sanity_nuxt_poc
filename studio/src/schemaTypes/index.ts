@@ -1,5 +1,6 @@
 import {person} from './documents/person'
 import {page} from './documents/page'
+import {tag} from './documents/tag'
 import {post} from './documents/post'
 import {callToAction} from './objects/callToAction'
 import {infoSection} from './objects/infoSection'
@@ -16,6 +17,7 @@ export const schemaTypes = [
   page,
   post,
   person,
+  tag,
   // Objects
   blockContent,
   infoSection,

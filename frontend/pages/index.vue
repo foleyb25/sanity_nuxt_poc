@@ -15,12 +15,11 @@ const { data: posts } = await useSanityQuery<PostsQueryResult>(postsQuery);
     <MediaHeroBeGreat />
     <CarouselAutoQuery
       :query="posts"
+      title="Popular"
     />
     <CarouselAutoQuery
       :query="posts"
-    />
-    <CarouselAutoQuery
-      :query="posts"
+      title="New"
     />
     <TheFooter />
   </div>

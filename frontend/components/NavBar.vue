@@ -12,23 +12,18 @@
         :class="isActive ? 'i-ph-house-fill text-primary' : 'i-ph-house'"
       />
     </NuxtLink>
-    <NuxtLink v-slot="{ isActive }" to="/movie" :title="('Movies')">
-      <div
-        text-2xl
-        :class="isActive ? 'i-ph-film-strip-fill text-primary' : 'i-ph-film-strip'"
-      />
-    </NuxtLink>
-    <NuxtLink v-slot="{ isActive }" to="/tv" :title="('TV Shows')">
-      <div
-        text-2xl
-        :class="isActive ? 'i-ph-television-simple-fill text-primary' : 'i-ph-television-simple'"
-      />
-    </NuxtLink>
     <NuxtLink v-slot="{ isActive }" to="/search" :title="('Search')">
       <div
         text-2xl
         :class="isActive ? 'i-ph-magnifying-glass-fill text-primary' : 'i-ph-magnifying-glass'"
       />
     </NuxtLink>
+    <NuxtLink v-slot="{ isActive }" to="/shop" :title="('Shop')">
+      <div
+        text-2xl
+        :class="isActive ? 'i-ph-shopping-cart-simple-fill text-primary' :  'i-ph-shopping-cart-simple'"
+      />
+    </NuxtLink>
+    
   </div>
 </template>

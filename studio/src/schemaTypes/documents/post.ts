@@ -114,6 +114,18 @@ export const post = defineType({
       group: 'content',
     }),
     defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [
+      {
+        type: 'reference',
+        to: [{ type: 'tag' }],
+      },
+  ],
+    }),
+
+    defineField({
       name: 'seoTitle',
       title: 'SEO Title',
       type: 'string',

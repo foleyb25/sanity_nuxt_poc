@@ -23,27 +23,16 @@ export const postsQuery =
 	}`);
 
 export const somePostsQuery = defineQuery(/* groq */ `
-*[_type == "post" && slug.current != $skip][0...$limit] | order(date desc, _updatedAt desc) {
-	...
+*[_type == "post" && slug.current != $skip &&
+(
+  !$byAuthor || author._ref == $authorId
+)
+][0...$limit] | order(date desc, _updatedAt desc) {
+	...,
+	author->{
+		...
+	  }
 }`);
-
-export const postQuery = defineQuery(/* groq */ `
-		*[_type == "post" && defined(slug.current) && slug.current == $slug][0]{
-			...,
-			content[]{
-						...,
-						markDefs[]{
-							...,
-							_type == "link" => {
-								"link": {
-									...,
-									${linkReference}
-								}
-							},
-						}
-					},
-			"author": author->{..., "picture": picture.asset._ref}
-		}`);
 
 export const pageQuery = defineQuery(/* groq */ `
 		*[_type == "page" && defined(slug.current) && slug.current == $slug][0]{
@@ -69,6 +58,33 @@ export const pageQuery = defineQuery(/* groq */ `
 				},
 			}
 		}`);
+
+export const postQuery = defineQuery(/* groq */ `
+		*[_type == "post" && defined(slug.current) && slug.current == $slug][0]{
+			...,
+			content[]{
+						...,
+						markDefs[]{
+							...,
+							_type == "link" => {
+								"link": {
+									...,
+									${linkReference}
+								}
+							},
+						}
+					},
+			author->{
+				...
+				}
+		}`);
+
+export const getRecommendedAuthorPosts = defineQuery(/* groq */ `
+		*[_type == "post" && author._ref == $authorId && _id != $postId ] | order(date desc, _updatedAt desc)[0...10] {
+			...
+		}`);
+
+		
 
 export const settingsQuery = defineQuery(/* groq */ `
 		*[_type == "settings"][0]{

@@ -1,93 +1,35 @@
-<!-- <script lang="ts" setup>
-import { postQuery, somePostsQuery } from "~/sanity/queries";
-import type { PostQueryResult, SomePostsQueryResult } from "~/sanity/types";
-
-const { data: post } = await useSanityQuery<PostQueryResult>(postQuery, {
-  slug: useRoute().params.slug,
-});
-const { data: posts } = await useSanityQuery<SomePostsQueryResult>(
-  somePostsQuery,
-  {
-    skip: useRoute().params.slug,
-    limit: 2,
-  }
-);
-
-useSiteMetadata({
-  title: post?.value?.seoTitle || post?.value?.title,
-  description: post?.value?.seoDescription || post?.value?.excerpt,
-});
-</script>
-
-<template>
-  <div v-if="post">
-    <div class="container my-12 lg:my-24 grid gap-12">
-      <div>
-        <div class="pb-6 grid gap-6 mb-6 border-b border-gray-100">
-          <div class="max-w-3xl flex flex-col gap-6">
-            <h2
-              class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-7xl"
-            >
-              {{ post.title }}
-            </h2>
-          </div>
-          <div class="max-w-3xl flex gap-4 items-center">
-            <Avatar
-              v-if="post.author"
-              :person="post.author"
-              :date="post.date"
-            />
-          </div>
-        </div>
-        <article class="gap-6 grid max-w-4xl">
-          <div>
-             <CoverImage :image="post.coverImage" priority />
-            <SanityImage
-              v-if="post.coverImage?.asset?._ref"
-              class="rounded-2xl shadow-md transition-shadow object-cover"
-              :alt="post.coverImage?.alt || ''"
-              :asset-id="post.coverImage.asset._ref"
-              auto=""
-              format
-            />
-          </div>
-          <div class="prose prose-a:text-red-500 max-w-2xl" v-if="post.content">
-            <PortableContent :content="post.content" />
-          </div>
-        </article>
-      </div>
-    </div>
-    <div class="border-t border-gray-100" v-if="posts">
-      <div class="container my-12 lg:my-24 grid gap-12">
-        <aside>
-          <Posts heading="Recent Posts" :posts="posts" />
-        </aside>
-      </div>
-    </div>
-  </div>
-</template> -->
-
 <script setup lang="ts">
-import { postQuery, somePostsQuery } from "~/sanity/queries";
-import type { PostQueryResult, SomePostsQueryResult } from "~/sanity/types";
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { postQuery, somePostsQuery } from '~/sanity/queries';
+import type { PostQueryResult, SomePostsQueryResult } from '~/sanity/types';
 
-const { data: post } = await useSanityQuery<PostQueryResult>(postQuery, {
-  slug: useRoute().params.slug,
+const route = useRoute();
+
+const post = ref<PostQueryResult | null>(null);
+const posts = ref<SomePostsQueryResult | null>(null);
+
+const slug = route.params.slug as string;
+
+const { data: postResult } = await useSanityQuery<PostQueryResult>(postQuery, {
+  slug
 });
-const { data: posts } = await useSanityQuery<SomePostsQueryResult>(
-  somePostsQuery,
-  {
-    skip: useRoute().params.slug,
-    limit: 2,
-  }
-);
+
+post.value = postResult.value;
+const { data: relatedPosts } = await useSanityQuery<SomePostsQueryResult>(somePostsQuery, {
+  skip: slug,
+  limit: 10,
+  byAuthor: true,
+  authorId: post.value.author._id
+});
+
+posts.value = relatedPosts.value;
+
 
 useSiteMetadata({
   title: post?.value?.seoTitle || post?.value?.title,
   description: post?.value?.seoDescription || post?.value?.excerpt,
 });
-
-const route = useRoute()
 
 // useHead({
 //   title: item.name || item.title,
@@ -100,24 +42,19 @@ const route = useRoute()
 
 <template>
   <div v-if="post">
-    <!-- <MediaHero :item="item" />
-    <MediaDetails :item="item" :type="type" />
-    <CarouselBase v-if="recommendations?.results?.length">
-      <template #title>
-        {{ $t('More like this') }}
-      </template>
-      <MediaCard
-        v-for="i of recommendations.results"
-        :key="i.id"
-        :item="i"
-        :type="type"
-        flex-1 w-40 md:w-60
-      />
-    </CarouselBase> -->
     <MediaHero :item="post" />
     <div class="p-8">
       <MediaDetails :item="post" />
     </div>
+    <div v-if="posts">
+      <CarouselAutoQuery
+        :query="posts"
+        title="More by this author"
+      />
+    </div>
+
+
+    
     
     <TheFooter />
   </div>

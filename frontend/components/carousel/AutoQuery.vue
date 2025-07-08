@@ -2,14 +2,15 @@
 import type { BlockContent, PostsQueryResult, Post } from '~/sanity/types'
 
 const props = defineProps<{
-  query: PostsQueryResult | null
+  query: PostsQueryResult | null,
+  title: string
 }>()
 </script>
 
 <template>
   <CarouselBase>
     <template #title>
-      {{ ("Popular Movies") }}
+      {{ (title) }}
     </template>
     <template #more>
       <NuxtLink :to="`/category/`" n-link>

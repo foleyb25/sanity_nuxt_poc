@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { Person } from "~/sanity/types";
 
 defineProps<{
-  item: any
+  item: Person
 }>()
 </script>
 
@@ -21,17 +22,13 @@ defineProps<{
         <a v-if="item.instagram" :href="'https://instagram.com/'+item.instagram" target="_blank"><div class="i-ph-instagram-logo"></div></a>
         <a v-if="item.snapchat" :href="'https://snapchat.com/@'+item.snapchat" target="_blank"><div class="i-ph-snapchat-logo"></div></a>
         <a v-if="item.github" :href="'https://github.com/'+item.github" target="_blank"><div class="i-ph-github-logo"></div></a>
-        
-        
       </div>
+      <q id="Quote" class="italic"> {{ item.quote }} </q>
     </div>
    
     <hr>
     <div id="Bio">{{ item.bio }}</div>
     <hr>
-    <div v-if="item.quote" class="flex flex-col items-center">
-      <q id="Quote" class="italic"> {{ item.quote }} </q>
-    </div>
     
     
   </div>

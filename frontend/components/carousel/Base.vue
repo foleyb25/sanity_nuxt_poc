@@ -28,7 +28,7 @@ function scrollRight() {
     <slot name="more" />
   </div>
   <div relative>
-    <div ref="scrollEl" overflow-y-auto>
+    <div ref="scrollEl" overflow-y-hidden>
       <div flex gap-2 w-max p-2 px-10>
         <slot />
       </div>

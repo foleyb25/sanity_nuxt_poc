@@ -529,7 +529,7 @@ export type PostsQueryResult = Array<{
   seoDescription?: string;
 }>;
 // Variable: somePostsQuery
-// Query: *[_type == "post" && slug.current != $skip][0...$limit] | order(date desc, _updatedAt desc) {	...}
+// Query: *[_type == "post" && slug.current != $skip &&(  !$byAuthor || author._ref == $authorId)][0...$limit] | order(date desc, _updatedAt desc) {	...,	author->{		...	  }}
 export type SomePostsQueryResult = Array<{
   _id: string;
   _type: "post";
@@ -553,80 +553,6 @@ export type SomePostsQueryResult = Array<{
     _type: "image";
   };
   date?: string;
-  author?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "person";
-  };
-  seoTitle?: string;
-  seoDescription?: string;
-}>;
-// Variable: postQuery
-// Query: *[_type == "post" && defined(slug.current) && slug.current == $slug][0]{			...,			content[]{						...,						markDefs[]{							...,							_type == "link" => {								"link": {									...,									_type == "link" => {	"page": page->slug.current,	"post": post->slug.current}								}							},						}					},			"author": author->{..., "picture": picture.asset._ref}		}
-export type PostQueryResult = {
-  _id: string;
-  _type: "post";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  slug: Slug;
-  content: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs: Array<{
-      linkType?: "href" | "page" | "post";
-      href?: string;
-      page?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "page";
-      };
-      post?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "post";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-      link: {
-        linkType?: "href" | "page" | "post";
-        href?: string;
-        page: string | null;
-        post: string | null;
-        openInNewTab?: boolean;
-        _type: "link";
-        _key: string;
-      };
-    }> | null;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  excerpt?: string;
-  coverImage: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
-  date?: string;
   author: {
     _id: string;
     _type: "person";
@@ -635,11 +561,22 @@ export type PostQueryResult = {
     _rev: string;
     firstName: string;
     lastName: string;
-    picture: string | null;
+    picture: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
   } | null;
   seoTitle?: string;
   seoDescription?: string;
-} | null;
+}>;
 // Variable: pageQuery
 // Query: *[_type == "page" && defined(slug.current) && slug.current == $slug][0]{			...,			"pageBuilder": pageBuilder[]{				...,				_type == "callToAction" => {					link {	...,	_type == "link" => {	"page": page->slug.current,	"post": post->slug.current}	},				},				_type == "infoSection" => {					content[]{						...,						markDefs[]{							...,							_type == "link" => {								"link": {									...,									_type == "link" => {	"page": page->slug.current,	"post": post->slug.current}								}							},						}					}				},			}		}
 export type PageQueryResult = {
@@ -716,6 +653,129 @@ export type PageQueryResult = {
   seoTitle?: string;
   seoDescription?: string;
 } | null;
+// Variable: postQuery
+// Query: *[_type == "post" && defined(slug.current) && slug.current == $slug][0]{			...,			content[]{						...,						markDefs[]{							...,							_type == "link" => {								"link": {									...,									_type == "link" => {	"page": page->slug.current,	"post": post->slug.current}								}							},						}					},			author->{				...				}		}
+export type PostQueryResult = {
+  _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs: Array<{
+      linkType?: "href" | "page" | "post";
+      href?: string;
+      page?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      post?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "post";
+      };
+      openInNewTab?: boolean;
+      _type: "link";
+      _key: string;
+      link: {
+        linkType?: "href" | "page" | "post";
+        href?: string;
+        page: string | null;
+        post: string | null;
+        openInNewTab?: boolean;
+        _type: "link";
+        _key: string;
+      };
+    }> | null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  excerpt?: string;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  date?: string;
+  author: {
+    _id: string;
+    _type: "person";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    firstName: string;
+    lastName: string;
+    picture: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+  } | null;
+  seoTitle?: string;
+  seoDescription?: string;
+} | null;
+// Variable: getRecommendedAuthorPosts
+// Query: *[_type == "post" && author._ref == $authorId && _id != $postId ] | order(date desc, _updatedAt desc)[0...10] {			...		}
+export type GetRecommendedAuthorPostsResult = Array<{
+  _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  content?: BlockContent;
+  excerpt?: string;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  date?: string;
+  author?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "person";
+  };
+  seoTitle?: string;
+  seoDescription?: string;
+}>;
 // Variable: settingsQuery
 // Query: *[_type == "settings"][0]{			title,			description[]{						...,						markDefs[]{							...,							_type == "link" => {								"link": {									...,									_type == "link" => {	"page": page->slug.current,	"post": post->slug.current}								}							},						}					},			"ogImage": ogImage.asset->url		}
 export type SettingsQueryResult = {
@@ -769,9 +829,10 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"post\"] | order(date desc, _updatedAt desc) {\n\t\t...,\n\t\tauthor->{\n\t\t\t...\n\t\t  }\n\t}": PostsQueryResult;
-    "\n*[_type == \"post\" && slug.current != $skip][0...$limit] | order(date desc, _updatedAt desc) {\n\t...\n}": SomePostsQueryResult;
-    "\n\t\t*[_type == \"post\" && defined(slug.current) && slug.current == $slug][0]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmarkDefs[]{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t_type == \"link\" => {\n\t\t\t\t\t\t\t\t\"link\": {\n\t\t\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t\t\t\n_type == \"link\" => {\n\t\"page\": page->slug.current,\n\t\"post\": post->slug.current\n}\n\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\"author\": author->{..., \"picture\": picture.asset._ref}\n\t\t}": PostQueryResult;
+    "\n*[_type == \"post\" && slug.current != $skip &&\n(\n  !$byAuthor || author._ref == $authorId\n)\n][0...$limit] | order(date desc, _updatedAt desc) {\n\t...,\n\tauthor->{\n\t\t...\n\t  }\n}": SomePostsQueryResult;
     "\n\t\t*[_type == \"page\" && defined(slug.current) && slug.current == $slug][0]{\n\t\t\t...,\n\t\t\t\"pageBuilder\": pageBuilder[]{\n\t\t\t\t...,\n\t\t\t\t_type == \"callToAction\" => {\n\t\t\t\t\t\nlink {\n\t...,\n\t\n_type == \"link\" => {\n\t\"page\": page->slug.current,\n\t\"post\": post->slug.current\n}\n\n\t}\n,\n\t\t\t\t},\n\t\t\t\t_type == \"infoSection\" => {\n\t\t\t\t\tcontent[]{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmarkDefs[]{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t_type == \"link\" => {\n\t\t\t\t\t\t\t\t\"link\": {\n\t\t\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t\t\t\n_type == \"link\" => {\n\t\"page\": page->slug.current,\n\t\"post\": post->slug.current\n}\n\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t}\n\t\t}": PageQueryResult;
+    "\n\t\t*[_type == \"post\" && defined(slug.current) && slug.current == $slug][0]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmarkDefs[]{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t_type == \"link\" => {\n\t\t\t\t\t\t\t\t\"link\": {\n\t\t\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t\t\t\n_type == \"link\" => {\n\t\"page\": page->slug.current,\n\t\"post\": post->slug.current\n}\n\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\tauthor->{\n\t\t\t\t...\n\t\t\t\t}\n\t\t}": PostQueryResult;
+    "\n\t\t*[_type == \"post\" && author._ref == $authorId && _id != $postId ] | order(date desc, _updatedAt desc)[0...10] {\n\t\t\t...\n\t\t}": GetRecommendedAuthorPostsResult;
     "\n\t\t*[_type == \"settings\"][0]{\n\t\t\ttitle,\n\t\t\tdescription[]{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmarkDefs[]{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t_type == \"link\" => {\n\t\t\t\t\t\t\t\t\"link\": {\n\t\t\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\t\t\t\n_type == \"link\" => {\n\t\"page\": page->slug.current,\n\t\"post\": post->slug.current\n}\n\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t}\n\t\t\t\t\t},\n\t\t\t\"ogImage\": ogImage.asset->url\n\t\t}": SettingsQueryResult;
   }
 }

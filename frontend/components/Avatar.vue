@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import type { Person } from "~/sanity/types";
 
-type SimplifiedPerson = Omit<Person, "picture"> & {
-  picture: string | null;
-};
 
 defineProps({
   person: {
-    type: Object as PropType<SimplifiedPerson>,
+    type: Object as PropType<Person>,
     required: true,
   },
   date: {
@@ -19,9 +16,11 @@ defineProps({
 
 <template>
   <div class="flex items-center">
+    <!-- {{ person }}
+    {{ person.firstName }} -->
     <div v-if="person.picture" class="mr-4 h-9 w-9">
       <SanityImage
-        :asset-id="person.picture"
+        :asset-id="person.picture?.asset?._ref"
         auto="format"
         class="h-full rounded-full object-cover"
         :alt="`${person.firstName} ${person.lastName}`"
