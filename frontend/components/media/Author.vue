@@ -11,7 +11,7 @@ defineProps<{
     <div flex="~ col items-center" px4 md:px14 py4 gap6>
       <div v-if="item.picture" class=" h-50 w-50">
       <SanityImage
-        :asset-id="item.picture"
+        :asset-id="item.picture?.asset?._ref"
         auto="format"
         class="h-full rounded-full object-cover"
         :alt="`${item.firstName} ${item.lastName}`"

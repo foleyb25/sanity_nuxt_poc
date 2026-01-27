@@ -14,7 +14,9 @@ defineProps<{
               :date="item.date"
             />
           </div>
+          <hr>
   <div class=" prose prose-a:text-red-500 max-w-2xl" v-if="item?.content">
     <PortableContent :content="item?.content" />
   </div>
+  <hr>
 </template>

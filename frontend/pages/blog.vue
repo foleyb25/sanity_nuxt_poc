@@ -11,12 +11,12 @@ const { data: posts } = await useSanityQuery<PostsQueryResult>(postsQuery);
 </script>
 
 <template>
-  <div>
-    <MediaHeroBeGreat />
-    <CarouselAutoQuery
-      :query="posts"
-      title="New"
-    />
-    <TheFooter />
+  <div class="w-3/4 bg-red-400 flex justify-center">
+    <div class="block">
+        <MediaCardWidth post={{ posts }}></MediaCardWidth>
+    </div>
+    <div>
+        <MediaCardWidth post={{ posts }}></MediaCardWidth>
+    </div>
   </div>
 </template>

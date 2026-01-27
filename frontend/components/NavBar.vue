@@ -12,7 +12,7 @@
         :class="isActive ? 'i-ph-house-fill text-primary' : 'i-ph-house'"
       />
     </NuxtLink>
-    <NuxtLink v-slot="{ isActive }" to="/search" :title="('Search')">
+    <NuxtLink v-slot="{ isActive }" to="/blog" :title="('Search')">
       <div
         text-2xl
         :class="isActive ? 'i-ph-magnifying-glass-fill text-primary' : 'i-ph-magnifying-glass'"
